@@ -21,6 +21,17 @@ server.get('/api/projects', async(req, res) => {
     }
 })
 
+server.get('/api/projects/:id', async(req, res) => {
+    const projectID = req.params.id;
+    try {
+        const project = await db.getProjectsWithActions(projectID);
+        res.status(200).json(project)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+
 server.get('/api/actions', async(req, res)=> {
     try {
         const actions = await db.findActions();
@@ -29,6 +40,8 @@ server.get('/api/actions', async(req, res)=> {
         res.status(500).json(error)
     }
 })
+
+
 
 server.post('/api/projects', async(req, res) => {
     const newProject = req.body

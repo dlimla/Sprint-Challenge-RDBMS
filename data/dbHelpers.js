@@ -22,5 +22,11 @@ module.exports = {
         return db('actions')
         .insert(action)
         .then(([id]) => this.get(id))
+    },
+
+    getProjectsWithActions: (id) => {
+        return db('projects')
+        .join('actions', 'projects.id','=', 'actions.project_id')
+        .where({ "projects.id": id})
     }
 }
